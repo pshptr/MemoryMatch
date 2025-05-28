@@ -15,23 +15,17 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
+               let scene = LoadingScene(size: view.bounds.size) // check notification screen
+//               let scene = NotificationScene(size: view.bounds.size)
+               scene.scaleMode = .aspectFill
+               view.presentScene(scene)
+               view.ignoresSiblingOrder = true
+           }
+        
         }
     }
 
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
@@ -39,7 +33,7 @@ class GameViewController: UIViewController {
         }
     }
 
-    override var prefersStatusBarHidden: Bool {
+var prefersStatusBarHidden: Bool {
         return true
     }
-}
+
