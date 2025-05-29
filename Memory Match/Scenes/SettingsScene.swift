@@ -17,7 +17,8 @@ class SettingsScene: SKScene {
         bg.zPosition = -1
         addChild(bg)
     }
-
+    
+    // buttons UI
     private func setupButtons() {
         
         let soundImage = SettingsManager.shared.isSoundOn ? "Sound" : "MuteSound"
@@ -43,7 +44,8 @@ class SettingsScene: SKScene {
         backButton.zPosition = 1
         addChild(backButton)
     }
-
+    
+    // buttons handling
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let location = touches.first?.location(in: self),
               let touchedNode = nodes(at: location).first else { return }

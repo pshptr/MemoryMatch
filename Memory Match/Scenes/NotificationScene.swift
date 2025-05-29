@@ -5,20 +5,17 @@ class NotificationScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = .black
 
-        // Фон
         let bg = SKSpriteNode(imageNamed: "BG_1")
         bg.position = CGPoint(x: frame.midX, y: frame.midY)
         bg.size = frame.size
         bg.zPosition = -1
         addChild(bg)
 
-        // Шапка шута
         let jester = SKSpriteNode(imageNamed: "HatLogo")
         jester.setScale(0.5)
         jester.position = CGPoint(x: frame.midX, y: frame.maxY - 220)
         addChild(jester)
 
-        // Заголовок
         let title = SKLabelNode(text: "ALLOW NOTIFICATIONS ABOUT BONUSES AND PROMOS")
         title.fontName = "AvenirNext-Bold"
         title.fontSize = 20
@@ -31,7 +28,6 @@ class NotificationScene: SKScene {
         title.lineBreakMode = .byWordWrapping
         addChild(title)
 
-        // Подзаголовок
         let subtitle = SKLabelNode(text: "Stay tuned with best offers from our casino")
         subtitle.fontName = "AvenirNext-Regular"
         subtitle.fontSize = 16
@@ -39,7 +35,6 @@ class NotificationScene: SKScene {
         subtitle.position = CGPoint(x: frame.midX, y: frame.midY + 40)
         addChild(subtitle)
 
-        // Кнопка "Yes"
         let yesButton = SKShapeNode(rectOf: CGSize(width: 300, height: 50), cornerRadius: 12)
         yesButton.name = "yes"
         yesButton.fillColor = .yellow
@@ -56,7 +51,6 @@ class NotificationScene: SKScene {
 
         addChild(yesButton)
 
-        // Кнопка "Skip"
         let skipLabel = SKLabelNode(text: "Skip")
         skipLabel.fontName = "AvenirNext-Regular"
         skipLabel.fontSize = 16

@@ -6,34 +6,28 @@ class MenuScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = .black
 
-        let background = SKSpriteNode(imageNamed: "MenuScene")
+        let background = SKSpriteNode(imageNamed: "MenuScene") // Menu screen background Menu.png
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.zPosition = -1
         background.size = frame.size
         addChild(background)
 
-        let fireCenter = CGPoint(x: frame.midX, y: frame.midY + 40)
-
-        let menuIcon = SKSpriteNode(imageNamed: "Menu_icon")
-        menuIcon.setScale(0.25)
-        menuIcon.position = fireCenter
-        addChild(menuIcon)
-
-        let playButton = SKSpriteNode(imageNamed: "Game")
+        let playButton = SKSpriteNode(imageNamed: "Game") // "game" button
         playButton.name = "play"
         playButton.setScale(0.3)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY - 180)
         playButton.zPosition = 2
         addChild(playButton)
 
-        let policyButton = SKSpriteNode(imageNamed: "PrivacyPolicy")
+        let policyButton = SKSpriteNode(imageNamed: "PrivacyPolicy") // "privacy policy" button
         policyButton.name = "policy"
         policyButton.setScale(0.3)
         policyButton.position = CGPoint(x: frame.midX, y: frame.midY - 250)
         policyButton.zPosition = 2
         addChild(policyButton)
     }
-
+    
+    // buttons handling
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)

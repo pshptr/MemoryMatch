@@ -5,15 +5,14 @@ class LoadingScene: SKScene {
     private var fireNode: SKSpriteNode!
 
     override func didMove(to view: SKView) {
-        backgroundColor = .black
 
-        let background = SKSpriteNode(imageNamed: "LoadingScene")
+        let background = SKSpriteNode(imageNamed: "LoadingScene") // LoadingScene.png
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.zPosition = -1
         background.size = frame.size
         addChild(background)
 
-        fireNode = SKSpriteNode(imageNamed: "Fire_icon")
+        fireNode = SKSpriteNode(imageNamed: "Fire_icon") // Fire_icon.png
         fireNode.setScale(0.35)
         fireNode.position = CGPoint(x: frame.midX, y: frame.midY + 180)
         addChild(fireNode)
@@ -29,7 +28,7 @@ class LoadingScene: SKScene {
         ]))
     }
 
-    private func animateFire() {
+    private func animateFire() { // fire animation function (jumping fire)
         let moveUp = SKAction.moveBy(x: 0, y: 20, duration: 0.5)
         let moveDown = SKAction.moveBy(x: 0, y: -20, duration: 0.5)
         let sequence = SKAction.sequence([moveUp, moveDown])

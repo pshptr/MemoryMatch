@@ -1,6 +1,8 @@
 
 import Foundation
 
+// card structure
+
 struct Card {
     let id: Int
     let imageName: String
