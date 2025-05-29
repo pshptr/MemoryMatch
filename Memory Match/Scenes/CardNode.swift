@@ -10,34 +10,42 @@ class CardNode: SKSpriteNode {
     init(card: Card) {
         self.card = card
         self.frontTexture = SKTexture(imageNamed: card.imageName)
-        super.init(texture: backTexture, color: .clear, size: CGSize(width: 90, height: 90))
+        super.init(texture: backTexture, color: .clear, size: CGSize(width: 80, height: 80))
         name = "card"
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func flip() {
+        guard !isFlipping else { return }
         isFlipping = true
-        let flip1 = SKAction.scaleX(to: 0, duration: 0.2)
-        let change = SKAction.run { self.texture = self.frontTexture }
-        let flip2 = SKAction.scaleX(to: 1, duration: 0.2)
-        let sequence = SKAction.sequence([flip1, change, flip2])
+
+        let flipHalf = SKAction.scaleX(to: 0.0, duration: 0.15)
+        let showFront = SKAction.run {
+            self.texture = SKTexture(imageNamed: self.card.imageName)
+        }
+        let flipBack = SKAction.scaleX(to: 1.0, duration: 0.15)
+        let sequence = SKAction.sequence([flipHalf, showFront, flipBack])
+
         run(sequence) {
-            self.card.isFlipped = true
             self.isFlipping = false
         }
     }
-
+    
     func flipBack() {
+        guard !isFlipping else { return }
         isFlipping = true
-        let flip1 = SKAction.scaleX(to: 0, duration: 0.2)
-        let change = SKAction.run { self.texture = self.backTexture }
-        let flip2 = SKAction.scaleX(to: 1, duration: 0.2)
-        let sequence = SKAction.sequence([flip1, change, flip2])
+
+        let flipHalf = SKAction.scaleX(to: 0.0, duration: 0.15)
+        let showBack = SKAction.run {
+            self.texture = SKTexture(imageNamed: "Slot")
+        }
+        let flipBack = SKAction.scaleX(to: 1.0, duration: 0.15)
+        let sequence = SKAction.sequence([flipHalf, showBack, flipBack])
+
         run(sequence) {
-            self.card.isFlipped = false
             self.isFlipping = false
         }
     }

@@ -14,6 +14,7 @@ class GameScene: SKScene {
     private var secondsPassed = 0
     private var isGamePaused = false
     private var timerActionKey = "timerAction"
+    private var isInteractionBlocked = false
 
     override func didMove(to view: SKView) {
         backgroundColor = .black
@@ -43,24 +44,24 @@ class GameScene: SKScene {
 
     private func setupHUD() {
         let hudBackground = SKSpriteNode(imageNamed: "MovesTime")
-        hudBackground.position = CGPoint(x: frame.midX, y: frame.maxY - 180)
+        hudBackground.position = CGPoint(x: frame.midX, y: frame.maxY - 120)
         hudBackground.zPosition = 1
-        hudBackground.size = CGSize(width: 400, height: 60)
+        hudBackground.size = CGSize(width: 300, height: 50)
         addChild(hudBackground)
 
         moveLabel = SKLabelNode(text: "MOVES: 0")
         moveLabel.fontName = "AvenirNext-Bold"
-        moveLabel.fontSize = 18
+        moveLabel.fontSize = 16
         moveLabel.fontColor = .white
-        moveLabel.position = CGPoint(x: frame.midX - 80, y: frame.maxY - 188)
+        moveLabel.position = CGPoint(x: frame.midX - 80, y: frame.maxY - 128)
         moveLabel.zPosition = 2
         addChild(moveLabel)
 
         timerLabel = SKLabelNode(text: "TIME: 00:00")
         timerLabel.fontName = "AvenirNext-Bold"
-        timerLabel.fontSize = 18
+        timerLabel.fontSize = 16
         timerLabel.fontColor = .white
-        timerLabel.position = CGPoint(x: frame.midX + 80, y: frame.maxY - 188)
+        timerLabel.position = CGPoint(x: frame.midX + 80, y: frame.maxY - 128)
         timerLabel.zPosition = 2
         addChild(timerLabel)
     }
@@ -68,28 +69,28 @@ class GameScene: SKScene {
     private func setupControlButtons() {
         let settingsButton = SKSpriteNode(imageNamed: "Settings")
         settingsButton.name = "settings"
-        settingsButton.setScale(0.5)
-        settingsButton.position = CGPoint(x: frame.minX + 50, y: frame.maxY - 100)
+        settingsButton.setScale(0.4)
+        settingsButton.position = CGPoint(x: frame.minX + 50, y: frame.maxY - 60)
         settingsButton.zPosition = 2
         addChild(settingsButton)
 
         let pauseButton = SKSpriteNode(imageNamed: "Pause")
         pauseButton.name = "pause"
-        pauseButton.setScale(0.5)
+        pauseButton.setScale(0.4)
         pauseButton.position = CGPoint(x: frame.minX + 90, y: frame.minY + 70)
         pauseButton.zPosition = 2
         addChild(pauseButton)
 
         let leftButton = SKSpriteNode(imageNamed: "Back")
         leftButton.name = "back"
-        leftButton.setScale(0.5)
+        leftButton.setScale(0.4)
         leftButton.position = CGPoint(x: frame.midX, y: frame.minY + 70)
         leftButton.zPosition = 2
         addChild(leftButton)
 
         let restartButton = SKSpriteNode(imageNamed: "Restart")
         restartButton.name = "restart"
-        restartButton.setScale(0.5)
+        restartButton.setScale(0.4)
         restartButton.position = CGPoint(x: frame.maxX - 90, y: frame.minY + 70)
         restartButton.zPosition = 2
         addChild(restartButton)
@@ -137,8 +138,8 @@ class GameScene: SKScene {
     private func layoutCards() {
         let rows = 4
         let columns = 4
-        let spacing: CGFloat = 15
-        let cardSize = CGSize(width: 90, height: 90)
+        let spacing: CGFloat = 12
+        let cardSize = CGSize(width: 80, height: 80)
         let totalWidth = CGFloat(columns) * cardSize.width + CGFloat(columns - 1) * spacing
         let totalHeight = CGFloat(rows) * cardSize.height + CGFloat(rows - 1) * spacing
 
@@ -155,7 +156,7 @@ class GameScene: SKScene {
                 let posY = startY - CGFloat(row) * (cardSize.height + spacing)
                 node.position = CGPoint(x: posX, y: posY)
                 node.zPosition = 3
-                node.setScale(1)
+                node.setScale(0.9)
 
                 addChild(node)
                 cardNodes.append(node)
@@ -168,6 +169,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let location = touches.first?.location(in: self),
               let touchedNode = nodes(at: location).first else { return }
+        if isInteractionBlocked { return }
 
         switch touchedNode.name {
         case "settings":
@@ -254,10 +256,13 @@ class GameScene: SKScene {
         let first = flippedCards[0]
         let second = flippedCards[1]
 
+        isInteractionBlocked = true
+
         if first.card.imageName == second.card.imageName {
             first.markMatched()
             second.markMatched()
             flippedCards.removeAll()
+            isInteractionBlocked = false
 
             if cardNodes.allSatisfy({ $0.card.isMatched }) {
                 gameOver()
@@ -267,6 +272,7 @@ class GameScene: SKScene {
                 first.flipBack()
                 second.flipBack()
                 self.flippedCards.removeAll()
+                self.isInteractionBlocked = false
             }
         }
     }
